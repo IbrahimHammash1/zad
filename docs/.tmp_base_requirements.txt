@@ -1,0 +1,153 @@
+Grocery Basket Ordering Platform for Families in Syria and Users Abroad
+1. Overview
+The system is a platform that enables people living abroad to order predefined grocery baskets for their families inside Syria. The baskets are purchased from approved physical stores inside Syria and delivered to the recipient’s address through delivery agents.
+The system consists of:
+Customer mobile application
+Admin dashboard
+Manual delivery coordination system
+2. Goal of the MVP
+The main goal of the MVP is to test the idea by enabling:
+users to order grocery baskets
+Secure online payment
+Manual fulfillment and delivery inside Syria
+Trust through showing known approved stores per basket
+3. Actors
+3.1 Customer (Outside Syria)
+Browses and selects baskets
+Chooses a store from approved stores linked to the basket
+Places order and pays online
+Tracks order status
+3.2 Recipient (Inside Syria)
+Receives the grocery basket
+Does not interact with the system
+3.3 Delivery Agent
+Assigned manually by admin
+Purchases basket items from selected store
+Delivers order to recipient address
+3.4 Admin
+Manages the entire system including:
+Baskets
+Stores
+Delivery agents
+Orders
+4. Core Concept: Basket
+A basket is a fixed predefined package containing:
+List of grocery items
+Quantity per item
+Fixed total price
+A list of approved stores
+Each basket is linked only to its approved stores
+Customer must select one of these stores when ordering
+5. User Flow (End-to-End)
+Step 1: Browse Baskets
+Customer opens the app
+Views available predefined baskets
+Step 2: Select Basket
+Customer opens basket details
+Views:
+Items inside basket
+Approved stores for that basket
+Step 3: Select Store
+Customer selects one approved store from the list
+Step 4: Place Order
+Customer enters:
+Recipient name
+Phone number (inside Syria)
+Delivery address
+Optional notes
+Step 5: Payment
+Payment is processed via Stripe
+Order is created only after successful payment
+Step 6: Order Creation
+Order status becomes: Pending
+Step 7: Admin Assignment
+Admin manually assigns a delivery agent
+Step 8: Fulfillment
+Delivery agent buys items from selected store
+Prepares order
+Step 9: Delivery
+Order is delivered to recipient address
+Step 10: Completion
+Order status is marked as Delivered
+6. Customer Application Requirements
+Features:
+User registration and login
+Browse baskets
+View basket details (items + approved stores)
+Select store per basket
+Place order
+Stripe payment integration
+Order status tracking (no live tracking)
+Order history
+Multi-language support (Arabic / English)
+7. Admin Dashboard Requirements
+7.1 Basket Management
+Create baskets
+Edit baskets
+Delete baskets
+Assign items to baskets
+Assign Basket to store
+7.2 Store Management
+Add stores
+Edit stores
+Delete stores
+7.3 Delivery Agent Management
+Add delivery agents
+Activate/deactivate agents
+Assign orders manually to agents
+7.4 Order Management
+View all orders
+View order details
+Change order status:
+Pending
+Assigned
+In Progress
+Delivered
+Cancelled
+Assign delivery agent manually
+8. Payment System
+Payment provider: Stripe
+Payment required before order creation is confirmed
+No cash on delivery
+Failed payment ? order not created
+9. Delivery System
+Fully manual assignment by admin
+Delivery agent:
+Receives order details
+Purchases items from selected store
+Delivers to address
+No GPS tracking
+Only status updates
+10. Order Status Flow
+Pending (after payment)
+Assigned (agent assigned)
+In Progress (agent is purchasing/delivering)
+Delivered (completed)
+Cancelled
+11. Non-Functional Requirements
+Must support global users
+System must handle cross-border payments
+High reliability for order tracking status
+Simple and fast user experience
+Secure payment handling via Stripe
+The system must support bilingual UI (Arabic and English) across all platforms
+Proper handling of RTL (Right-to-Left) layout for Arabic
+12. Security Requirements
+Users only see their own orders
+Delivery agents cannot access payment data
+Admin has full system access
+Secure handling of personal addresses and phone numbers
+13. MVP Scope Summary
+Included in MVP:
+Predefined baskets only
+Approved stores per basket
+Stripe payments
+Manual delivery assignment
+Status-based tracking only
+Admin full management system
+Not included in MVP:
+Live tracking (GPS)
+User-customized baskets
+Automated delivery assignment
+Multiple store splitting per order
+Subscription models
