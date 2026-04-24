@@ -17,8 +17,8 @@ class RegisterCustomerRequest extends FormRequest
         return [
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'confirmed', 'min:8'],
-            'phone' => ['required', 'string', 'max:32'],
+            'password' => ['required', 'string', 'min:8'],
+            'phone' => ['required', 'string', 'max:32', 'regex:/^\d+$/'],
             'country' => ['required', 'string', 'max:120'],
             'preferred_locale' => ['nullable', 'string', Rule::in(['en', 'ar'])],
             'device_name' => ['nullable', 'string', 'max:120'],

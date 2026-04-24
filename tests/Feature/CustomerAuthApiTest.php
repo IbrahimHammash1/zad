@@ -18,7 +18,6 @@ class CustomerAuthApiTest extends TestCase
             'full_name' => 'Customer One',
             'email' => 'customer@example.com',
             'password' => 'password123',
-            'password_confirmation' => 'password123',
             'phone' => '0999999999',
             'country' => 'Syria',
             'preferred_locale' => 'en',
@@ -63,6 +62,19 @@ class CustomerAuthApiTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.email', $customer->user->email)
             ->assertJsonPath('data.full_name', $customer->full_name);
+    }
+
+    public function test_registration_rejects_non_numeric_phone(): void
+    {
+        $this->postJson('/api/customer/register', [
+            'full_name' => 'Customer One',
+            'email' => 'customer@example.com',
+            'password' => 'password123',
+            'phone' => '0999-abc',
+            'country' => 'Syria',
+            'preferred_locale' => 'en',
+            'device_name' => 'iPhone',
+        ])->assertStatus(422)->assertJsonValidationErrors(['phone']);
     }
 
     public function test_logout_revokes_the_current_api_token(): void
