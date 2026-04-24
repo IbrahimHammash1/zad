@@ -9,13 +9,14 @@ RUN apk add --no-cache \
     icu-dev \
     libzip-dev \
     oniguruma-dev \
+    postgresql-dev \
     unzip \
     zip \
     && docker-php-ext-install \
     bcmath \
     intl \
     mbstring \
-    pdo_mysql \
+    pdo_pgsql \
     zip
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -34,6 +35,7 @@ RUN chmod +x /usr/local/bin/start.sh
 
 ENV APP_ENV=production
 ENV APP_DEBUG=false
+ENV DB_CONNECTION=pgsql
 ENV SESSION_DRIVER=file
 ENV CACHE_STORE=file
 ENV QUEUE_CONNECTION=sync
