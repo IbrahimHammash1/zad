@@ -34,6 +34,9 @@ RUN chmod +x /usr/local/bin/start.sh
 
 ENV APP_ENV=production
 ENV APP_DEBUG=false
+ENV SESSION_DRIVER=file
+ENV CACHE_STORE=file
+ENV QUEUE_CONNECTION=sync
 
 EXPOSE 10000
 
