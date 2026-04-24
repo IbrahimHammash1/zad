@@ -10,6 +10,9 @@ php artisan config:clear
 
 php artisan migrate --force
 php artisan db:seed --force
+php artisan vendor:publish --tag=laravel-assets --force
+php artisan filament:assets
+php artisan vendor:publish --tag=scribe-assets --force
 php artisan config:cache
 
 exec php artisan serve --host=0.0.0.0 --port="${PORT:-10000}"
