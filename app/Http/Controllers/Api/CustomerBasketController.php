@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\ShowCustomerBasketRequest;
 use App\Http\Resources\BasketDetailResource;
 use App\Http\Resources\BasketListResource;
 use App\Services\Customer\CustomerBasketService;
@@ -23,8 +24,10 @@ class CustomerBasketController extends Controller
     /**
      * @unauthenticated
      */
-    public function show(string $basketSlug): BasketDetailResource
+    public function show(ShowCustomerBasketRequest $request): BasketDetailResource
     {
+        $basketSlug = $request->validated('basketSlug');
+
         return BasketDetailResource::make($this->customerBasketService->getAvailableBySlug($basketSlug));
     }
 }

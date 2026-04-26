@@ -8,7 +8,7 @@ fi
 
 php artisan config:clear
 
-php artisan migrate:fresh --force
+php artisan migrate --force
 php artisan db:seed --force
 php artisan vendor:publish --tag=laravel-assets --force
 php artisan filament:assets

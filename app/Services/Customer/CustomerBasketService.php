@@ -18,7 +18,7 @@ class CustomerBasketService
 
     public function getAvailableBySlug(string $slug): Basket
     {
-        $basket = $this->basketRepository->findAvailableForCustomerBySlug($slug);
+        $basket = $this->basketRepository->findActiveBySlug($slug);
 
         if (! $basket) {
             throw new NotFoundHttpException();

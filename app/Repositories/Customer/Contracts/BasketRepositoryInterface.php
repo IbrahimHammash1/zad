@@ -10,6 +10,7 @@ interface BasketRepositoryInterface
     public function getAvailableForCustomer(): Collection;
 
     public function findAvailableForCustomerBySlug(string $slug): ?Basket;
+    public function findActiveBySlug(string $slug): ?Basket;
 
     public function getActiveByIdsForCheckout(array $basketIds): Collection;
 }

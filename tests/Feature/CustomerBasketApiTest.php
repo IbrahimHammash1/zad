@@ -14,15 +14,30 @@ class CustomerBasketApiTest extends TestCase
 
     public function test_basket_endpoints_are_public(): void
     {
-        Basket::query()->create([
+        $basket = Basket::query()->create([
             'name' => 'Family Basket',
             'slug' => 'family-basket',
             'fixed_price' => 25.50,
             'is_active' => true,
         ]);
 
+        $material = Material::query()->create([
+            'name' => 'Rice',
+            'slug' => 'rice',
+            'unit' => 'kg',
+            'is_active' => true,
+        ]);
+
+        $basket->basketItems()->create([
+            'material_id' => $material->id,
+            'quantity' => 1,
+            'sort_order' => 1,
+        ]);
+
         $this->getJson('/api/customer/baskets')->assertOk();
-        $this->getJson('/api/customer/baskets/family-basket')->assertNotFound();
+        $this->getJson('/api/customer/baskets/family-basket')
+            ->assertOk()
+            ->assertJsonPath('data.slug', 'family-basket');
     }
 
     public function test_it_lists_only_baskets_available_for_customer_ordering(): void
@@ -106,7 +121,7 @@ class CustomerBasketApiTest extends TestCase
             ->assertJsonPath('data.approved_stores.0.name', 'Main Store');
     }
 
-    public function test_it_returns_not_found_for_non_orderable_baskets(): void
+    public function test_it_returns_basket_detail_with_empty_stores_when_no_active_store_exists(): void
     {
         $basket = Basket::query()->create([
             'name' => 'Family Basket',
@@ -121,6 +136,20 @@ class CustomerBasketApiTest extends TestCase
         ]);
 
         $basket->stores()->attach($inactiveStore);
+
+        $this->getJson('/api/customer/baskets/family-basket')
+            ->assertOk()
+            ->assertJsonCount(0, 'data.approved_stores');
+    }
+
+    public function test_it_returns_not_found_for_inactive_basket(): void
+    {
+        Basket::query()->create([
+            'name' => 'Family Basket',
+            'slug' => 'family-basket',
+            'fixed_price' => 25.50,
+            'is_active' => false,
+        ]);
 
         $this->getJson('/api/customer/baskets/family-basket')
             ->assertNotFound();

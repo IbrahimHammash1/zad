@@ -26,6 +26,15 @@ class EloquentBasketRepository implements BasketRepositoryInterface
             ->first();
     }
 
+    public function findActiveBySlug(string $slug): ?Basket
+    {
+        return Basket::query()
+            ->where('is_active', true)
+            ->where('slug', $slug)
+            ->with($this->customerRelations())
+            ->first();
+    }
+
     public function getActiveByIdsForCheckout(array $basketIds): Collection
     {
         return Basket::query()
