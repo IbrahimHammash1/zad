@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Enums\UserRole;
 use App\Models\Basket;
+use App\Models\Customer;
 use App\Models\Material;
 use App\Models\Store;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,8 +15,16 @@ class CustomerBasketApiTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_basket_endpoints_require_authentication(): void
+    {
+        $this->getJson('/api/customer/baskets')->assertUnauthorized();
+        $this->getJson('/api/customer/baskets/family-basket')->assertUnauthorized();
+    }
+
     public function test_it_lists_only_baskets_available_for_customer_ordering(): void
     {
+        $token = $this->authenticateCustomer();
+
         $availableBasket = Basket::query()->create([
             'name' => 'Family Basket',
             'slug' => 'family-basket',
@@ -45,7 +56,9 @@ class CustomerBasketApiTest extends TestCase
             'is_active' => true,
         ]);
 
-        $response = $this->getJson('/api/customer/baskets');
+        $response = $this->getJson('/api/customer/baskets', [
+            'Authorization' => 'Bearer '.$token,
+        ]);
 
         $response
             ->assertOk()
@@ -55,6 +68,8 @@ class CustomerBasketApiTest extends TestCase
 
     public function test_it_returns_basket_detail_with_materials_and_approved_stores(): void
     {
+        $token = $this->authenticateCustomer();
+
         $basket = Basket::query()->create([
             'name' => 'Family Basket',
             'slug' => 'family-basket',
@@ -85,7 +100,9 @@ class CustomerBasketApiTest extends TestCase
 
         $basket->stores()->attach($store);
 
-        $this->getJson('/api/customer/baskets/family-basket')
+        $this->getJson('/api/customer/baskets/family-basket', [
+            'Authorization' => 'Bearer '.$token,
+        ])
             ->assertOk()
             ->assertJsonPath('data.slug', 'family-basket')
             ->assertJsonPath('data.materials.0.name', 'Rice')
@@ -95,6 +112,8 @@ class CustomerBasketApiTest extends TestCase
 
     public function test_it_returns_not_found_for_non_orderable_baskets(): void
     {
+        $token = $this->authenticateCustomer();
+
         $basket = Basket::query()->create([
             'name' => 'Family Basket',
             'slug' => 'family-basket',
@@ -109,7 +128,35 @@ class CustomerBasketApiTest extends TestCase
 
         $basket->stores()->attach($inactiveStore);
 
-        $this->getJson('/api/customer/baskets/family-basket')
+        $this->getJson('/api/customer/baskets/family-basket', [
+            'Authorization' => 'Bearer '.$token,
+        ])
             ->assertNotFound();
+    }
+
+    protected function authenticateCustomer(): string
+    {
+        $user = User::factory()->create([
+            'name' => 'Customer One',
+            'email' => 'basket-customer@example.com',
+            'password' => 'password',
+            'role' => UserRole::Customer,
+            'is_active' => true,
+        ]);
+
+        Customer::query()->create([
+            'user_id' => $user->id,
+            'full_name' => 'Customer One',
+            'phone' => '0999999999',
+            'country' => 'Syria',
+            'preferred_locale' => 'en',
+            'is_active' => true,
+        ]);
+
+        return $this->postJson('/api/customer/login', [
+            'email' => $user->email,
+            'password' => 'password',
+            'device_name' => 'iPhone',
+        ])->json('token');
     }
 }
