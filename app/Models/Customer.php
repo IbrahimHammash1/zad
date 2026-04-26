@@ -37,11 +37,6 @@ class Customer extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function apiTokens(): HasMany
-    {
-        return $this->hasMany(CustomerApiToken::class);
-    }
-
     public function checkoutIntents(): HasMany
     {
         return $this->hasMany(CustomerCheckoutIntent::class);

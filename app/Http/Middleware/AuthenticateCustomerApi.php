@@ -2,30 +2,35 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\Customer\CustomerAuthService;
+use App\Enums\UserRole;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticateCustomerApi
 {
-    public function __construct(protected CustomerAuthService $customerAuthService) {}
-
     public function handle(Request $request, Closure $next): Response
     {
-        $result = $this->customerAuthService->resolveCustomerFromBearerToken($request->bearerToken());
+        $user = $request->user();
+        $customer = $user?->customer;
 
-        if (! $result) {
+        if (! $user) {
             return $this->unauthorizedResponse();
         }
 
-        Auth::setUser($result['customer']->user);
+        if (
+            $user->role !== UserRole::Customer
+            || ! $user->is_active
+            || ! $customer
+            || ! $customer->is_active
+        ) {
+            return response()->json([
+                'message' => 'This customer account is inactive.',
+            ], 403);
+        }
 
-        $request->setUserResolver(fn () => $result['customer']->user);
-        $request->attributes->set('customer', $result['customer']);
-        $request->attributes->set('customer_api_token', $result['token']);
+        $request->attributes->set('customer', $customer);
 
         return $next($request);
     }

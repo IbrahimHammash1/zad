@@ -44,14 +44,14 @@ class CustomerAuthController extends Controller
     public function me(Request $request): CustomerProfileResource
     {
         /** @var Customer $customer */
-        $customer = $request->attributes->get('customer');
+        $customer = $request->user()->customer;
 
         return CustomerProfileResource::make($customer->loadMissing('user'));
     }
 
     public function logout(Request $request): JsonResponse
     {
-        $this->customerAuthService->revokeToken($request->attributes->get('customer_api_token'));
+        $this->customerAuthService->revokeCurrentToken($request->user());
 
         return response()->json([], 204);
     }

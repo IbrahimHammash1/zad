@@ -31,11 +31,11 @@ class CustomerAuthApiTest extends TestCase
             ->assertJsonPath('token_type', 'Bearer');
 
         $user = User::query()->where('email', 'customer@example.com')->firstOrFail();
-        $customer = Customer::query()->where('user_id', $user->id)->firstOrFail();
 
         $this->assertSame(UserRole::Customer, $user->role);
-        $this->assertDatabaseHas('customer_api_tokens', [
-            'customer_id' => $customer->id,
+        $this->assertDatabaseHas('personal_access_tokens', [
+            'tokenable_type' => User::class,
+            'tokenable_id' => $user->id,
             'name' => 'iPhone',
         ]);
     }
@@ -93,7 +93,7 @@ class CustomerAuthApiTest extends TestCase
             'Authorization' => 'Bearer '.$token,
         ])->assertNoContent();
 
-        $this->assertDatabaseMissing('customer_api_tokens', [
+        $this->assertDatabaseMissing('personal_access_tokens', [
             'id' => $tokenId,
         ]);
     }

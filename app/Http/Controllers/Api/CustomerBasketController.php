@@ -12,11 +12,17 @@ class CustomerBasketController extends Controller
 {
     public function __construct(protected CustomerBasketService $customerBasketService) {}
 
+    /**
+     * @unauthenticated
+     */
     public function index(): AnonymousResourceCollection
     {
         return BasketListResource::collection($this->customerBasketService->listAvailable());
     }
 
+    /**
+     * @unauthenticated
+     */
     public function show(string $basketSlug): BasketDetailResource
     {
         return BasketDetailResource::make($this->customerBasketService->getAvailableBySlug($basketSlug));

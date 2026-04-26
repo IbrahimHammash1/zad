@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('customer')->group(function (): void {
     Route::post('/register', [CustomerAuthController::class, 'register']);
     Route::post('/login', [CustomerAuthController::class, 'login']);
+    Route::get('/baskets', [CustomerBasketController::class, 'index']);
+    Route::get('/baskets/{basketSlug}', [CustomerBasketController::class, 'show']);
 
-    Route::middleware('customer.api')->group(function (): void {
-        Route::get('/baskets', [CustomerBasketController::class, 'index']);
-        Route::get('/baskets/{basketSlug}', [CustomerBasketController::class, 'show']);
+    Route::middleware(['auth:sanctum', 'customer.api'])->group(function (): void {
         Route::post('/logout', [CustomerAuthController::class, 'logout']);
         Route::get('/me', [CustomerAuthController::class, 'me']);
         Route::post('/checkout/review', [CustomerCheckoutController::class, 'review']);
