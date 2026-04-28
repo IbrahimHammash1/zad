@@ -11,9 +11,27 @@ use App\Models\Store;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class TestDataSeeder extends Seeder
 {
+    protected function copyLogo(string $directory): string
+    {
+        $source = public_path('logo.png');
+        $filename = Str::random(20) . '.png';
+        $relativePath = $directory . '/' . $filename;
+        $fullPath = storage_path('app/public/' . $relativePath);
+        $dir = dirname($fullPath);
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        copy($source, $fullPath);
+
+        return $relativePath;
+    }
+
     public function run(): void
     {
         $admin = User::query()->updateOrCreate(
@@ -52,7 +70,7 @@ class TestDataSeeder extends Seeder
                 [
                     'name' => $item['name'],
                     'unit' => $item['unit'],
-                    'image' => 'logo.png',
+                    'image' => $this->copyLogo('materials'),
                     'is_active' => true,
                 ],
             ),
@@ -63,7 +81,7 @@ class TestDataSeeder extends Seeder
             [
                 'phone' => '0111111111',
                 'address' => 'Damascus - Mazzeh',
-                'image' => 'logo.png',
+                'image' => $this->copyLogo('stores'),
                 'is_active' => true,
             ],
         );
@@ -73,7 +91,7 @@ class TestDataSeeder extends Seeder
             [
                 'phone' => '0112222222',
                 'address' => 'Damascus - Midan',
-                'image' => 'logo.png',
+                'image' => $this->copyLogo('stores'),
                 'is_active' => true,
             ],
         );
@@ -84,7 +102,7 @@ class TestDataSeeder extends Seeder
                 'name' => 'Family Basket',
                 'description' => 'Balanced monthly essentials for a small family.',
                 'fixed_price' => 25.50,
-                'image' => 'logo.png',
+                'image' => $this->copyLogo('baskets'),
                 'is_active' => true,
             ],
         );
@@ -95,7 +113,7 @@ class TestDataSeeder extends Seeder
                 'name' => 'Economy Basket',
                 'description' => 'Budget friendly essentials package.',
                 'fixed_price' => 17.00,
-                'image' => 'logo.png',
+                'image' => $this->copyLogo('baskets'),
                 'is_active' => true,
             ],
         );
