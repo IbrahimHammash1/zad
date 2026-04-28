@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Materials\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
@@ -34,6 +35,12 @@ class MaterialForm
                         Toggle::make('is_active')
                             ->default(true)
                             ->required(),
+                        FileUpload::make('image')
+                            ->image()
+                            ->directory('materials')
+                            ->disk('public')
+                            ->imageEditor()
+                            ->columnSpanFull(),
                     ])
                     ->columns(2),
             ]);

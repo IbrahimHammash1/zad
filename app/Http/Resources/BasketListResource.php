@@ -15,6 +15,7 @@ class BasketListResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'fixed_price' => $this->fixed_price,
+            'image_url' => $this->image_url,
             'materials_count' => $this->basketItems->count(),
             'approved_stores_count' => $this->stores->count(),
         ];

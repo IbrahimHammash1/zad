@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Baskets\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
@@ -16,6 +17,11 @@ class BasketInfolist
             ->components([
                 Section::make('Basket Details')
                     ->schema([
+                        ImageEntry::make('image_url')
+                            ->label('Image')
+                            ->disk('public')
+                            ->height(200)
+                            ->columnSpanFull(),
                         TextEntry::make('name'),
                         TextEntry::make('slug'),
                         TextEntry::make('fixed_price')

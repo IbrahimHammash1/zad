@@ -52,6 +52,7 @@ class TestDataSeeder extends Seeder
                 [
                     'name' => $item['name'],
                     'unit' => $item['unit'],
+                    'image' => 'logo.png',
                     'is_active' => true,
                 ],
             ),
@@ -62,6 +63,7 @@ class TestDataSeeder extends Seeder
             [
                 'phone' => '0111111111',
                 'address' => 'Damascus - Mazzeh',
+                'image' => 'logo.png',
                 'is_active' => true,
             ],
         );
@@ -71,6 +73,7 @@ class TestDataSeeder extends Seeder
             [
                 'phone' => '0112222222',
                 'address' => 'Damascus - Midan',
+                'image' => 'logo.png',
                 'is_active' => true,
             ],
         );
@@ -81,6 +84,7 @@ class TestDataSeeder extends Seeder
                 'name' => 'Family Basket',
                 'description' => 'Balanced monthly essentials for a small family.',
                 'fixed_price' => 25.50,
+                'image' => 'logo.png',
                 'is_active' => true,
             ],
         );
@@ -91,6 +95,7 @@ class TestDataSeeder extends Seeder
                 'name' => 'Economy Basket',
                 'description' => 'Budget friendly essentials package.',
                 'fixed_price' => 17.00,
+                'image' => 'logo.png',
                 'is_active' => true,
             ],
         );

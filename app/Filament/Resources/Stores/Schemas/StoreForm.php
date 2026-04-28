@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Stores\Schemas;
 
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
@@ -28,6 +29,12 @@ class StoreForm
                             ->required(),
                         Textarea::make('address')
                             ->rows(4)
+                            ->columnSpanFull(),
+                        FileUpload::make('image')
+                            ->image()
+                            ->directory('stores')
+                            ->disk('public')
+                            ->imageEditor()
                             ->columnSpanFull(),
                     ])
                     ->columns(2),

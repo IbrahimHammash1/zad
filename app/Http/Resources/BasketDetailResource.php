@@ -15,11 +15,13 @@ class BasketDetailResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'fixed_price' => $this->fixed_price,
+            'image_url' => $this->image_url,
             'materials' => $this->basketItems->map(fn ($basketItem): array => [
                 'id' => $basketItem->material->id,
                 'name' => $basketItem->material->name,
                 'slug' => $basketItem->material->slug,
                 'unit' => $basketItem->material->unit,
+                'image_url' => $basketItem->material->image_url,
                 'quantity' => $basketItem->quantity,
                 'sort_order' => $basketItem->sort_order,
             ])->values(),
@@ -28,6 +30,7 @@ class BasketDetailResource extends JsonResource
                 'name' => $store->name,
                 'phone' => $store->phone,
                 'address' => $store->address,
+                'image_url' => $store->image_url,
             ])->values(),
         ];
     }

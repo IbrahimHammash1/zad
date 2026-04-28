@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Baskets\Schemas;
 
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -41,6 +42,12 @@ class BasketForm
                             ->required(),
                         Textarea::make('description')
                             ->rows(4)
+                            ->columnSpanFull(),
+                        FileUpload::make('image')
+                            ->image()
+                            ->directory('baskets')
+                            ->disk('public')
+                            ->imageEditor()
                             ->columnSpanFull(),
                     ])
                     ->columns(2),

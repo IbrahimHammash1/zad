@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Stores\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
@@ -15,6 +16,11 @@ class StoreInfolist
             ->components([
                 Section::make('Store Details')
                     ->schema([
+                        ImageEntry::make('image_url')
+                            ->label('Image')
+                            ->disk('public')
+                            ->height(200)
+                            ->columnSpanFull(),
                         TextEntry::make('name'),
                         TextEntry::make('phone')
                             ->placeholder('No phone'),
