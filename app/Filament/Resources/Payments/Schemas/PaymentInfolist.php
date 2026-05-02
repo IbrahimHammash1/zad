@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Payments\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 
 class PaymentInfolist
 {
@@ -23,8 +23,8 @@ class PaymentInfolist
                         TextEntry::make('amount')
                             ->money('USD'),
                         TextEntry::make('currency'),
-                        TextEntry::make('provider_payment_intent_id')
-                            ->label('Stripe Payment Intent')
+                        TextEntry::make('provider_reference')
+                            ->label('Provider Reference')
                             ->placeholder('No external reference'),
                         TextEntry::make('paid_at')
                             ->dateTime()

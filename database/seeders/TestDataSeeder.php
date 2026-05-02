@@ -18,12 +18,12 @@ class TestDataSeeder extends Seeder
     protected function copyLogo(string $directory): string
     {
         $source = public_path('logo.png');
-        $filename = Str::random(20) . '.png';
-        $relativePath = $directory . '/' . $filename;
-        $fullPath = storage_path('app/public/' . $relativePath);
+        $filename = Str::random(20).'.png';
+        $relativePath = $directory.'/'.$filename;
+        $fullPath = storage_path('app/public/'.$relativePath);
         $dir = dirname($fullPath);
 
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
 

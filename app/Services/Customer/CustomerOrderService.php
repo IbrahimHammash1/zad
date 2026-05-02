@@ -22,7 +22,7 @@ class CustomerOrderService
         $order = $this->orderRepository->findByIdForCustomer($customer, $orderId);
 
         if (! $order) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException;
         }
 
         return $order;

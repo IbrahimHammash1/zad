@@ -264,7 +264,7 @@ Requirements:
 
 Scope:
 - payment state visibility
-- Stripe-based payment references
+- Ziina-based payment references
 - no cash on delivery
 - no access to payment-sensitive data for delivery agents
 

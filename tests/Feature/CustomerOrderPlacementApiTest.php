@@ -11,22 +11,22 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CustomerCheckoutApiTest extends TestCase
+class CustomerOrderPlacementApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_checkout_review_requires_authentication(): void
+    public function test_order_review_requires_authentication(): void
     {
-        $this->postJson('/api/customer/checkout/review', [])
+        $this->postJson('/api/customer/orders/review', [])
             ->assertUnauthorized();
     }
 
-    public function test_checkout_review_returns_validated_summary_and_subtotal(): void
+    public function test_order_review_returns_validated_summary_and_subtotal_without_writes(): void
     {
         $token = $this->authenticateCustomer();
         [$basket, $store] = $this->createOrderableBasket();
 
-        $response = $this->postJson('/api/customer/checkout/review', [
+        $response = $this->postJson('/api/customer/orders/review', [
             'recipient_name' => 'Receiver',
             'recipient_phone' => '0999999999',
             'delivery_address' => 'Damascus',
@@ -45,9 +45,12 @@ class CustomerCheckoutApiTest extends TestCase
             ->assertJsonPath('data.basket_lines.0.quantity', 3)
             ->assertJsonPath('data.basket_lines.0.line_total', '76.50')
             ->assertJsonPath('data.subtotal', '76.50');
+
+        $this->assertDatabaseCount('orders', 0);
+        $this->assertDatabaseCount('payments', 0);
     }
 
-    public function test_checkout_review_rejects_unapproved_store(): void
+    public function test_order_review_rejects_unapproved_store(): void
     {
         $token = $this->authenticateCustomer();
         [$basket] = $this->createOrderableBasket();
@@ -56,7 +59,7 @@ class CustomerCheckoutApiTest extends TestCase
             'is_active' => true,
         ]);
 
-        $this->postJson('/api/customer/checkout/review', [
+        $this->postJson('/api/customer/orders/review', [
             'recipient_name' => 'Receiver',
             'recipient_phone' => '0999999999',
             'delivery_address' => 'Damascus',
@@ -70,12 +73,12 @@ class CustomerCheckoutApiTest extends TestCase
             ->assertJsonPath('errors.basket_lines.0', "Store {$unapprovedStore->id} is not approved for basket {$basket->id}.");
     }
 
-    public function test_checkout_intent_is_created_without_creating_order(): void
+    public function test_customer_can_place_order_after_successful_ziina_payment(): void
     {
         $token = $this->authenticateCustomer();
         [$basket, $store] = $this->createOrderableBasket();
 
-        $response = $this->postJson('/api/customer/checkout/intents', [
+        $response = $this->postJson('/api/customer/orders', [
             'recipient_name' => 'Receiver',
             'recipient_phone' => '0999999999',
             'delivery_address' => 'Damascus',
@@ -89,15 +92,30 @@ class CustomerCheckoutApiTest extends TestCase
 
         $response
             ->assertCreated()
-            ->assertJsonPath('data.currency', 'USD')
+            ->assertJsonPath('data.status.value', 'pending')
+            ->assertJsonPath('data.recipient.name', 'Receiver')
             ->assertJsonPath('data.subtotal', '51.00')
-            ->assertJsonPath('data.basket_lines.0.quantity', 2);
+            ->assertJsonPath('data.basket_lines.0.quantity', 2)
+            ->assertJsonPath('data.payment.provider', 'ziina')
+            ->assertJsonPath('data.payment.status', 'succeeded');
 
-        $this->assertDatabaseCount('orders', 0);
-        $this->assertDatabaseHas('customer_checkout_intents', [
+        $this->assertDatabaseHas('orders', [
             'currency' => 'USD',
             'recipient_name' => 'Receiver',
             'recipient_phone' => '0999999999',
+            'status' => 'pending',
+        ]);
+        $this->assertDatabaseHas('order_baskets', [
+            'basket_id' => $basket->id,
+            'store_id' => $store->id,
+            'quantity' => 2,
+            'basket_name' => 'Family Basket',
+            'store_name' => 'Main Store',
+        ]);
+        $this->assertDatabaseHas('payments', [
+            'provider' => 'ziina',
+            'status' => 'succeeded',
+            'amount' => '51.00',
         ]);
     }
 

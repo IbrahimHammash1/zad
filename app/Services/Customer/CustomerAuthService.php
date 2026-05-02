@@ -3,9 +3,9 @@
 namespace App\Services\Customer;
 
 use App\Models\User;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Repositories\Customer\Contracts\CustomerRepositoryInterface;
 use App\Repositories\Customer\Contracts\UserRepositoryInterface;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;

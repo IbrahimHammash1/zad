@@ -35,7 +35,7 @@ This document covers the customer-facing application and customer workflows for 
 - approved store selection
 - recipient information entry
 - order placement
-- Stripe payment
+- Ziina payment
 - order status tracking
 - order history
 - customer localization
@@ -69,7 +69,7 @@ Note:
 
 - `MVP-CUS-001` Predefined baskets only
 - `MVP-CUS-002` Approved stores per basket
-- `MVP-CUS-003` Stripe payments
+- `MVP-CUS-003` Ziina payments
 - `MVP-CUS-004` Status-based tracking only
 - `MVP-CUS-005` Basket browsing and detail viewing
 - `MVP-CUS-006` Customer registration and login
@@ -331,13 +331,13 @@ Acceptance criteria:
 
 #### `FR-CUS-301`
 
-The system shall use Stripe for customer payment processing.
+The system shall use Ziina for customer payment processing.
 
 Priority: Must have
 
 Acceptance criteria:
 
-- Customer payment in MVP is processed through Stripe.
+- Customer payment in MVP is processed through Ziina.
 
 #### `FR-CUS-302`
 
@@ -411,7 +411,7 @@ Acceptance criteria:
 
 #### `FR-CUS-309`
 
-The system shall securely handle Stripe payment processing.
+The system shall securely handle Ziina payment processing.
 
 Priority: Must have
 
@@ -587,7 +587,7 @@ Acceptance criteria:
 
 #### `NFR-CUS-007`
 
-The system shall securely handle Stripe-based payment processing.
+The system shall securely handle Ziina-based payment processing.
 
 Acceptance criteria:
 
@@ -622,6 +622,6 @@ These are not blockers for starting customer implementation, but they should be 
 - basket listing and basket details
 - approved store selection
 - order placement with recipient details
-- Stripe checkout entry flow
+- Ziina payment entry flow
 - customer order history
 - customer order detail with status display

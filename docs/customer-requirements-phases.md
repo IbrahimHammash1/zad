@@ -167,10 +167,10 @@ Exit criteria:
 - delivery-agent-facing flows do not expose payment-sensitive data
 - customer APIs enforce the intended privacy boundaries consistently
 
-## Phase 7: Stripe Checkout and Payment Confirmation
+## Phase 7: Ziina Payment and Order Confirmation
 
 Goal:
-- complete payment-driven order creation through Stripe
+- complete payment-driven order creation through Ziina
 
 Requirements:
 - `FR-CUS-208`
@@ -188,7 +188,7 @@ Requirements:
 - `BR-CUS-006`
 
 Scope:
-- Stripe checkout session or payment intent entry flow
+- Ziina payment entry flow
 - payment status handling
 - success and failure result handling
 - retry path after failed payment
@@ -207,7 +207,7 @@ Exit criteria:
 4. Phase 4: Order History and Status Tracking
 5. Phase 5: Localization and Customer App Presentation Support
 6. Phase 6: Privacy and Access Hardening
-7. Phase 7: Stripe Checkout and Payment Confirmation
+7. Phase 7: Ziina Payment and Order Confirmation
 
 ## Notes
 

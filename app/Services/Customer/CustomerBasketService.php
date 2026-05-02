@@ -21,7 +21,7 @@ class CustomerBasketService
         $basket = $this->basketRepository->findActiveBySlug($slug);
 
         if (! $basket) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException;
         }
 
         return $basket;

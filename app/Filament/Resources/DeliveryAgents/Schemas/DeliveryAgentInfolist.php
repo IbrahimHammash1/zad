@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\DeliveryAgents\Schemas;
 
-use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 
 class DeliveryAgentInfolist
 {

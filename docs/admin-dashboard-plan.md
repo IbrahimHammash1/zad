@@ -80,7 +80,7 @@ If any of those decisions change, the implementation plan should be updated befo
 ### 3.7 Payments
 
 - View payment state for each order
-- View Stripe reference information
+- View Ziina reference information
 - Keep payment records read-only in admin
 
 ## 4. Proposed Filament Resources
@@ -166,7 +166,7 @@ Goal:
 
 Deliverables:
 - `PaymentResource` or payment section inside orders
-- Stripe payment reference display
+- Ziina payment reference display
 - read-only payment status visibility
 - links between orders and payments
 - audit-friendly order views

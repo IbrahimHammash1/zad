@@ -3,19 +3,13 @@
 namespace App\Services\Customer;
 
 use App\Models\Basket;
-use App\Models\Customer;
-use App\Models\CustomerCheckoutIntent;
 use App\Repositories\Customer\Contracts\BasketRepositoryInterface;
-use App\Repositories\Customer\Contracts\CheckoutIntentRepositoryInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 
-class CustomerCheckoutService
+class CustomerOrderReviewService
 {
-    public function __construct(
-        protected BasketRepositoryInterface $basketRepository,
-        protected CheckoutIntentRepositoryInterface $checkoutIntentRepository,
-    ) {}
+    public function __construct(protected BasketRepositoryInterface $basketRepository) {}
 
     public function review(array $payload): array
     {
@@ -74,23 +68,6 @@ class CustomerCheckoutService
             'basket_lines' => $reviewLines,
             'subtotal' => $this->formatMoney($subtotal),
         ];
-    }
-
-    public function createIntent(Customer $customer, array $payload): CustomerCheckoutIntent
-    {
-        $review = $this->review($payload);
-
-        return $this->checkoutIntentRepository->create([
-            'customer_id' => $customer->id,
-            'currency' => $review['currency'],
-            'recipient_name' => $review['recipient']['name'],
-            'recipient_phone' => $review['recipient']['phone'],
-            'delivery_address' => $review['recipient']['delivery_address'],
-            'notes' => $review['recipient']['notes'],
-            'line_items' => $review['basket_lines'],
-            'subtotal' => $review['subtotal'],
-            'expires_at' => now()->addMinutes(30),
-        ]);
     }
 
     protected function normalizeLines(array $basketLines): Collection

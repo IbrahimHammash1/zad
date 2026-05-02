@@ -14,7 +14,7 @@ This ERD is derived from [admin-functional-requirements.md](./admin-functional-r
 - `order_baskets` stores the baskets selected within an order.
 - Historical basket/store values are kept on `order_baskets` without using `_snapshot` naming.
 - `order_status_histories` makes status changes auditable.
-- `payments` is modeled separately to keep Stripe-related data isolated from operational order data.
+- `payments` is modeled separately to keep Ziina-related data isolated from operational order data.
 
 ## Mermaid ER Diagram
 
@@ -145,7 +145,7 @@ erDiagram
         bigint id PK
         bigint order_id FK
         string provider
-        string provider_payment_intent_id UK
+        string provider_reference UK
         string currency
         decimal amount
         string status
@@ -237,7 +237,7 @@ erDiagram
 ### `payments`
 
 - Keeps payment provider information separate from order operations.
-- Recommended provider value in MVP: `stripe`.
+- Recommended provider value in MVP: `ziina`.
 
 ## Recommended Constraints
 
@@ -259,4 +259,4 @@ erDiagram
 - Whether `delivery_agents` should later become authenticatable users.
 - Whether an order may contain the same basket more than once as separate lines or should use quantity aggregation.
 - Whether `materials.unit` should be free text or a controlled list.
-- Whether failed Stripe attempts should be stored in a separate `payment_attempts` table.
+- Whether failed Ziina attempts should be stored in a separate `payment_attempts` table.

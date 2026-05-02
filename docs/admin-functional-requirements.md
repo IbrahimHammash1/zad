@@ -72,7 +72,7 @@ Note:
 
 - `MVP-001` Predefined baskets only
 - `MVP-002` Approved stores per basket
-- `MVP-003` Stripe payments
+- `MVP-003` Ziina payments
 - `MVP-004` Manual delivery assignment
 - `MVP-005` Status-based tracking only
 - `MVP-006` Full admin management for materials, baskets, stores, delivery agents, and orders
@@ -709,13 +709,13 @@ Acceptance criteria:
 
 #### `FR-ADM-601`
 
-The system shall use Stripe as the payment provider.
+The system shall use Ziina as the payment provider.
 
 Priority: Must have
 
 Acceptance criteria:
 
-- Admin-facing payment records reference Stripe-based payments only in MVP.
+- Admin-facing payment records reference Ziina-based payments only in MVP.
 
 #### `FR-ADM-602`
 

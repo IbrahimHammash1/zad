@@ -42,6 +42,14 @@ class CustomerOrderDetailResource extends JsonResource
             ],
             'basket_lines' => $lines,
             'subtotal' => number_format($subtotal, 2, '.', ''),
+            'payment' => $this->whenLoaded('payment', fn (): ?array => $this->payment ? [
+                'provider' => $this->payment->provider?->value,
+                'status' => $this->payment->status?->value,
+                'amount' => $this->payment->amount,
+                'currency' => $this->payment->currency,
+                'provider_reference' => $this->payment->provider_reference,
+                'paid_at' => $this->payment->paid_at?->toISOString(),
+            ] : null),
             'created_at' => $this->created_at?->toISOString(),
             'paid_at' => $this->paid_at?->toISOString(),
         ];

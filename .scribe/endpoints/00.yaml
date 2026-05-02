@@ -1,4 +1,4 @@
-name: Endpoints
+name: 'Customer Auth'
 description: ''
 endpoints:
   -
@@ -8,16 +8,15 @@ endpoints:
     uri: api/customer/register
     metadata:
       custom: []
-      groupName: Endpoints
+      groupName: 'Customer Auth'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: Register
       description: ''
-      authenticated: true
+      authenticated: false
       deprecated: false
     headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -28,9 +27,9 @@ endpoints:
       full_name:
         custom: []
         name: full_name
-        description: 'Must not be greater than 255 characters.'
+        description: 'Customer full name. Must not be greater than 255 characters.'
         required: true
-        example: b
+        example: 'Customer One'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -39,9 +38,9 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'Must be a valid email address. Must not be greater than 255 characters.'
+        description: 'Customer email address. Must be a valid email address. Must not be greater than 255 characters.'
         required: true
-        example: zbailey@example.net
+        example: customer@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -50,9 +49,9 @@ endpoints:
       password:
         custom: []
         name: password
-        description: 'Must be at least 8 characters.'
+        description: 'Customer password. Must be at least 8 characters.'
         required: true
-        example: '-0pBNvYgxw'
+        example: password123
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -61,9 +60,9 @@ endpoints:
       phone:
         custom: []
         name: phone
-        description: 'Must match the regex /^\d+$/. Must not be greater than 32 characters.'
+        description: 'Customer phone number. Digits only. Must match the regex /^\d+$/. Must not be greater than 32 characters.'
         required: true
-        example: a
+        example: '0999999999'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -72,9 +71,9 @@ endpoints:
       country:
         custom: []
         name: country
-        description: 'Must not be greater than 120 characters.'
+        description: 'Customer country. Must not be greater than 120 characters.'
         required: true
-        example: 'y'
+        example: Syria
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -83,9 +82,9 @@ endpoints:
       preferred_locale:
         custom: []
         name: preferred_locale
-        description: ''
+        description: 'Preferred locale.'
         required: false
-        example: ar
+        example: en
         type: string
         enumValues:
           - en
@@ -96,29 +95,44 @@ endpoints:
       device_name:
         custom: []
         name: device_name
-        description: 'Must not be greater than 120 characters.'
+        description: 'Device name used for the issued token. Must not be greater than 120 characters.'
         required: false
-        example: k
+        example: iPhone
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      full_name: b
-      email: zbailey@example.net
-      password: '-0pBNvYgxw'
-      phone: a
-      country: 'y'
-      preferred_locale: ar
-      device_name: k
+      full_name: 'Customer One'
+      email: customer@example.com
+      password: password123
+      phone: '0999999999'
+      country: Syria
+      preferred_locale: en
+      device_name: iPhone
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "token": "1|plain-text-token",
+            "token_type": "Bearer",
+            "customer": {
+              "id": 1,
+              "full_name": "Customer One",
+              "email": "customer@example.com",
+              "phone": "0999999999",
+              "country": "Syria",
+              "preferred_locale": "en"
+            }
+          }
+        headers: []
+        description: ''
     responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    auth: []
     controller: null
     method: null
     route: null
@@ -129,16 +143,15 @@ endpoints:
     uri: api/customer/login
     metadata:
       custom: []
-      groupName: Endpoints
+      groupName: 'Customer Auth'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: Login
       description: ''
-      authenticated: true
+      authenticated: false
       deprecated: false
     headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -149,9 +162,9 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'Must be a valid email address.'
+        description: 'Customer email address. Must be a valid email address.'
         required: true
-        example: gbailey@example.net
+        example: customer@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -160,9 +173,9 @@ endpoints:
       password:
         custom: []
         name: password
-        description: ''
+        description: 'Customer password.'
         required: true
-        example: '|]|{+-'
+        example: password123
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -171,115 +184,38 @@ endpoints:
       device_name:
         custom: []
         name: device_name
-        description: 'Must not be greater than 120 characters.'
+        description: 'Device name used for the issued token. Must not be greater than 120 characters.'
         required: false
-        example: v
+        example: iPhone
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      email: gbailey@example.net
-      password: '|]|{+-'
-      device_name: v
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/customer/baskets
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+      email: customer@example.com
+      password: password123
+      device_name: iPhone
     fileParameters: []
     responses:
       -
         custom: []
         status: 200
-        content: '{"data":[{"id":11,"name":"Economy Basket","slug":"economy-basket","description":"Budget friendly essentials package.","fixed_price":"17.00","image_url":"http:\/\/localhost:8000\/storage\/logo.png","materials_count":3,"approved_stores_count":1},{"id":10,"name":"Family Basket","slug":"family-basket","description":"Balanced monthly essentials for a small family.","fixed_price":"25.50","image_url":"http:\/\/localhost:8000\/storage\/logo.png","materials_count":4,"approved_stores_count":2}]}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/customer/baskets/{basketSlug}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      basketSlug:
-        custom: []
-        name: basketSlug
-        description: 'Basket slug.'
-        required: true
-        example: family-basket
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      basketSlug: family-basket
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"data":{"id":10,"name":"Family Basket","slug":"family-basket","description":"Balanced monthly essentials for a small family.","fixed_price":"25.50","image_url":"http:\/\/localhost:8000\/storage\/logo.png","materials":[{"id":2,"name":"Rice","slug":"rice","unit":"kg","image_url":"http:\/\/localhost:8000\/storage\/logo.png","quantity":3,"sort_order":1},{"id":3,"name":"Sugar","slug":"sugar","unit":"kg","image_url":"http:\/\/localhost:8000\/storage\/logo.png","quantity":2,"sort_order":2},{"id":4,"name":"Sunflower Oil","slug":"sunflower-oil","unit":"liter","image_url":"http:\/\/localhost:8000\/storage\/logo.png","quantity":2,"sort_order":3},{"id":5,"name":"Pasta","slug":"pasta","unit":"pack","image_url":"http:\/\/localhost:8000\/storage\/logo.png","quantity":4,"sort_order":4}],"approved_stores":[{"id":8,"name":"Damascus Main Store","phone":"0111111111","address":"Damascus - Mazzeh","image_url":"http:\/\/localhost:8000\/storage\/logo.png"},{"id":9,"name":"Midan Store","phone":"0112222222","address":"Damascus - Midan","image_url":"http:\/\/localhost:8000\/storage\/logo.png"}]}}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        content: |-
+          {
+            "token": "1|plain-text-token",
+            "token_type": "Bearer",
+            "customer": {
+              "id": 1,
+              "full_name": "Customer One",
+              "email": "customer@example.com",
+              "phone": "0999999999",
+              "country": "Syria",
+              "preferred_locale": "en"
+            }
+          }
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -292,11 +228,11 @@ endpoints:
     uri: api/customer/logout
     metadata:
       custom: []
-      groupName: Endpoints
+      groupName: 'Customer Auth'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: Logout
       description: ''
       authenticated: true
       deprecated: false
@@ -311,7 +247,13 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: '{}'
+        headers: []
+        description: ''
     responseFields: []
     auth:
       - headers
@@ -327,11 +269,11 @@ endpoints:
     uri: api/customer/me
     metadata:
       custom: []
-      groupName: Endpoints
+      groupName: 'Customer Auth'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: Profile
       description: ''
       authenticated: true
       deprecated: false
@@ -349,388 +291,20 @@ endpoints:
     responses:
       -
         custom: []
-        status: 500
+        status: 200
         content: |-
           {
-              "message": "Server Error"
+            "data": {
+              "id": 1,
+              "full_name": "Customer One",
+              "email": "customer@example.com",
+              "phone": "0999999999",
+              "country": "Syria",
+              "preferred_locale": "en"
+            }
           }
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/customer/checkout/review
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      recipient_name:
-        custom: []
-        name: recipient_name
-        description: 'Must not be greater than 255 characters.'
-        required: true
-        example: b
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      recipient_phone:
-        custom: []
-        name: recipient_phone
-        description: 'Must match the regex /^09\d{8}$/.'
-        required: true
-        example: '0956425593'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      delivery_address:
-        custom: []
-        name: delivery_address
-        description: 'Must not be greater than 2000 characters.'
-        required: true
-        example: 'n'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      notes:
-        custom: []
-        name: notes
-        description: 'Must not be greater than 2000 characters.'
-        required: false
-        example: i
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      basket_lines:
-        custom: []
-        name: basket_lines
-        description: 'Must have at least 1 items.'
-        required: true
-        example:
-          - []
-        type: 'object[]'
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      'basket_lines[].basket_id':
-        custom: []
-        name: 'basket_lines[].basket_id'
+        headers: []
         description: ''
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      'basket_lines[].store_id':
-        custom: []
-        name: 'basket_lines[].store_id'
-        description: ''
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      'basket_lines[].quantity':
-        custom: []
-        name: 'basket_lines[].quantity'
-        description: 'Must be at least 1.'
-        required: true
-        example: 22
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      recipient_name: b
-      recipient_phone: '0956425593'
-      delivery_address: 'n'
-      notes: i
-      basket_lines:
-        -
-          basket_id: 16
-          store_id: 16
-          quantity: 22
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/customer/checkout/intents
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      recipient_name:
-        custom: []
-        name: recipient_name
-        description: 'Must not be greater than 255 characters.'
-        required: true
-        example: b
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      recipient_phone:
-        custom: []
-        name: recipient_phone
-        description: 'Must match the regex /^09\d{8}$/.'
-        required: true
-        example: '0956425593'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      delivery_address:
-        custom: []
-        name: delivery_address
-        description: 'Must not be greater than 2000 characters.'
-        required: true
-        example: 'n'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      notes:
-        custom: []
-        name: notes
-        description: 'Must not be greater than 2000 characters.'
-        required: false
-        example: i
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      basket_lines:
-        custom: []
-        name: basket_lines
-        description: 'Must have at least 1 items.'
-        required: true
-        example:
-          - []
-        type: 'object[]'
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      'basket_lines[].basket_id':
-        custom: []
-        name: 'basket_lines[].basket_id'
-        description: ''
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      'basket_lines[].store_id':
-        custom: []
-        name: 'basket_lines[].store_id'
-        description: ''
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      'basket_lines[].quantity':
-        custom: []
-        name: 'basket_lines[].quantity'
-        description: 'Must be at least 1.'
-        required: true
-        example: 22
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      recipient_name: b
-      recipient_phone: '0956425593'
-      delivery_address: 'n'
-      notes: i
-      basket_lines:
-        -
-          basket_id: 16
-          store_id: 16
-          quantity: 22
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/customer/orders
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 500
-        content: |-
-          {
-              "message": "Server Error"
-          }
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/customer/orders/{orderId}'
-    metadata:
-      custom: []
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      orderId:
-        custom: []
-        name: orderId
-        description: ''
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      orderId: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 500
-        content: |-
-          {
-              "message": "Server Error"
-          }
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
     responseFields: []
     auth:
       - headers

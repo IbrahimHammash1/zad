@@ -34,7 +34,7 @@ class PaymentsTable
             ->filters([
                 SelectFilter::make('provider')
                     ->options([
-                        'stripe' => 'Stripe',
+                        'ziina' => 'Ziina',
                     ]),
                 SelectFilter::make('status')
                     ->options([

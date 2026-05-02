@@ -127,7 +127,7 @@ erDiagram
         bigint id PK
         bigint order_id FK
         string provider
-        string provider_payment_intent_id UK
+        string provider_reference UK
         string currency
         decimal amount
         string status
